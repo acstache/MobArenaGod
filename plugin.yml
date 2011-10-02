@@ -10,6 +10,6 @@ commands:
         usage: |
                /mag toggle
 permissions:
-	MobArenaGod.toggle:
-		description: allows use of "/mag toggle" command
-		default: op
+    MobArenaGod.toggle:
+        description: allows use of "/mag toggle" command
+        default: op
