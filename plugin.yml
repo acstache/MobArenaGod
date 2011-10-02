@@ -1,0 +1,15 @@
+name: MobArenaGod
+main: com.ACStache.MobArenaGod.MobArenaGod
+version: 0.1
+author: ACStache
+description: A simple God Mode plugin that plays nice with Mob Arena
+softdepend: [MobArena]
+commands:
+    mag:
+        description: Turn god mode on or off
+        usage: |
+               /mag toggle
+permissions:
+	MobArenaGod.toggle:
+		description: allows use of "/mag toggle" command
+		default: op
