@@ -17,11 +17,13 @@ public class MAGSetter
         {
             godSet.remove(true);
             godSet.add(false);
+            player.sendMessage("MAG: God mode disabled");
         }
         else
         {
             godSet.remove(false);
             godSet.add(true);
+            player.sendMessage("MAG: God mode enabled");
         }
     }
     

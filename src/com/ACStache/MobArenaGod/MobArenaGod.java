@@ -24,6 +24,7 @@ public class MobArenaGod extends JavaPlugin
     public void onEnable()
     {
         PluginManager pm = getServer().getPluginManager();
+        pm.registerEvent(Event.Type.FOOD_LEVEL_CHANGE, entityListener, Priority.Highest, this);
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
@@ -41,17 +42,57 @@ public class MobArenaGod extends JavaPlugin
     {
         if(command.getName().equalsIgnoreCase("mag"))
         {
-            if(args[0].equalsIgnoreCase("toggle"))
+            if(args.length >= 1)
             {
-                if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.toggle"))
+                if(args[0].equalsIgnoreCase("toggle"))
                 {
-                    MAGSetter.setGod((Player)sender);
+                    if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.toggle"))
+                    {
+                        MAGSetter.setGod((Player)sender);
+                    }
+                    else
+                    {
+                        if(sender instanceof Player)
+                        {
+                            ((Player)sender).sendMessage("MAG: You don't have permission to do that.");
+                        }
+                        else
+                        {
+                            log.info("[" + info.getName() + "] You can't use that command from the console");
+                        }
+                    }
+                }
+                else if(args[0].equalsIgnoreCase("status"))
+                {
+                    if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.status"))
+                    {
+                        Player player = (Player)sender;
+                        if(MAGSetter.isGod(player))
+                        {
+                            player.sendMessage("MAG: You are a God");
+                        }
+                        else
+                        {
+                            player.sendMessage("MAG: You are not a God");
+                        }
+                    }
+                    else
+                    {
+                        if(sender instanceof Player)
+                        {
+                            ((Player)sender).sendMessage("MAG: You don't have permission to do that.");
+                        }
+                        else
+                        {
+                            log.info("[" + info.getName() + "] You can't use that command from the console");
+                        }
+                    }
                 }
                 else
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage("MAG: You don't have permission to do that.");
+                        ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
                     }
                     else
                     {
@@ -59,6 +100,24 @@ public class MobArenaGod extends JavaPlugin
                     }
                 }
             }
+            else
+            {
+                if(sender instanceof Player)
+                {
+                    ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
+                }
+                else
+                {
+                    log.info("[" + info.getName() + "] You can't use that command from the console");
+                }
+            }
+        }
+        else
+        {
+            if(sender instanceof Player)
+                ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
+            else
+                log.info("[" + info.getName() + "] You can't use that command from the console");
         }
         return true;
     }
