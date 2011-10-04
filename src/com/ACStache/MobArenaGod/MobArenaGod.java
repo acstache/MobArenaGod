@@ -2,15 +2,20 @@ package com.ACStache.MobArenaGod;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.garbagemule.MobArena.ArenaMaster;
+import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.MobArenaHandler;
 
 public class MobArenaGod extends JavaPlugin
@@ -18,6 +23,9 @@ public class MobArenaGod extends JavaPlugin
     private Logger log = Logger.getLogger("Minecraft");
     private PluginDescriptionFile info;
     public static MobArenaHandler maHandler;
+    public static ArenaMaster am;
+    @SuppressWarnings("unused")
+    private MAGArenaListener arenaListener;
     private final MAGEntityListener entityListener = new MAGEntityListener(this);
     private final MAGPlayerListener playerListener = new MAGPlayerListener(this);
     
@@ -29,6 +37,8 @@ public class MobArenaGod extends JavaPlugin
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         
+        setupMobArena();
+        
         info = getDescription();
         log.info("[" + info.getName() + "] v" + info.getVersion() + " Successfully Enabled! By: " + info.getAuthors());
     }
@@ -36,6 +46,17 @@ public class MobArenaGod extends JavaPlugin
     public void onDisable()
     {
         log.info("[" + info.getName() + "] Sucessfully Disabled");
+    }
+    
+    private void setupMobArena()
+    {
+        Plugin maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
+        
+        if(maPlugin == null) {return;}
+        
+        maHandler = new MobArenaHandler();
+        arenaListener = new MAGArenaListener();
+        am = ((MobArena)maPlugin).getAM();
     }
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -54,7 +75,7 @@ public class MobArenaGod extends JavaPlugin
                     {
                         if(sender instanceof Player)
                         {
-                            ((Player)sender).sendMessage("MAG: You don't have permission to do that.");
+                            ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
                         }
                         else
                         {
@@ -69,18 +90,18 @@ public class MobArenaGod extends JavaPlugin
                         Player player = (Player)sender;
                         if(MAGSetter.isGod(player))
                         {
-                            player.sendMessage("MAG: You are a God");
+                            player.sendMessage(ChatColor.AQUA + "MAG: You are a God");
                         }
                         else
                         {
-                            player.sendMessage("MAG: You are not a God");
+                            player.sendMessage(ChatColor.AQUA + "MAG: You are not a God");
                         }
                     }
                     else
                     {
                         if(sender instanceof Player)
                         {
-                            ((Player)sender).sendMessage("MAG: You don't have permission to do that.");
+                            ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
                         }
                         else
                         {
@@ -92,7 +113,7 @@ public class MobArenaGod extends JavaPlugin
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
                     }
                     else
                     {
@@ -104,7 +125,7 @@ public class MobArenaGod extends JavaPlugin
             {
                 if(sender instanceof Player)
                 {
-                    ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
+                    ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
                 }
                 else
                 {
@@ -115,7 +136,7 @@ public class MobArenaGod extends JavaPlugin
         else
         {
             if(sender instanceof Player)
-                ((Player)sender).sendMessage("MAG: Please type in '/mag toggle' or '/mag status'");
+                ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
             else
                 log.info("[" + info.getName() + "] You can't use that command from the console");
         }

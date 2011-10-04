@@ -3,6 +3,7 @@ package com.ACStache.MobArenaGod;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class MAGSetter
@@ -17,13 +18,27 @@ public class MAGSetter
         {
             godSet.remove(true);
             godSet.add(false);
-            player.sendMessage("MAG: God mode disabled");
+            if(!MAGArenaChecker.isPlayerInArena(player))
+            {
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode disabled");
+            }
+            else
+            {
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode not allowed in an Arena");
+            }
         }
         else
         {
             godSet.remove(false);
             godSet.add(true);
-            player.sendMessage("MAG: God mode enabled");
+            if(!MAGArenaChecker.isPlayerInArena(player))
+            {
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode enabled");
+            }
+            else
+            {
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode reinstated, hope you had fun being mortal!");
+            }
         }
     }
     

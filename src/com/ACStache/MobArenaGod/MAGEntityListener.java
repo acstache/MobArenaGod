@@ -26,9 +26,6 @@ public class MAGEntityListener extends EntityListener
         
         Player player = (Player)entity;
         
-        //if player is in an arena
-        if(MAGArenaChecker.isPlayerInArena(player)) {return;}
-        
         //if a player isn't a god
         if(!MAGSetter.isGod(player)) {return;}
         
@@ -51,9 +48,6 @@ public class MAGEntityListener extends EntityListener
             
             //if the player is not a god, ignore
             if(!MAGSetter.isGod(player)) {return;}
-            
-            //if a player is in an arena, ignore
-            if(MAGArenaChecker.isPlayerInArena(player)) {return;}
             
             //if a player is god and would lose hunger, cancel the event
             if(player.getFoodLevel() > event.getFoodLevel())
