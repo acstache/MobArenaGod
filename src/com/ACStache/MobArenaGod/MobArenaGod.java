@@ -37,7 +37,8 @@ public class MobArenaGod extends JavaPlugin
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         
-        setupMobArena();
+        if(Bukkit.getPluginManager().getPlugin("MobArena") != null)
+            setupMobArena();
         
         info = getDescription();
         log.info("[" + info.getName() + "] v" + info.getVersion() + " Successfully Enabled! By: " + info.getAuthors());
