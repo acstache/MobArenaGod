@@ -1,4 +1,6 @@
 A simple god mode plugin that also watches for people in a Mob Arena
 Simply drop the .jar file into your plugins folder.
 Provide people the permission MobArenaGod.toggle
-Use the command "/mag toggle" to turn god mode on and off
+Use the command "/mag" to turn god mode on and off
+Provide people the permission MobArenaGod.status
+use the command "/mag status" to check your current god mode status
