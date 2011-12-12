@@ -67,25 +67,7 @@ public class MobArenaGod extends JavaPlugin
         {
             if(args.length >= 1)
             {
-                if(args[0].equalsIgnoreCase("toggle"))
-                {
-                    if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.toggle"))
-                    {
-                        MAGSetter.setGod((Player)sender);
-                    }
-                    else
-                    {
-                        if(sender instanceof Player)
-                        {
-                            ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
-                        }
-                        else
-                        {
-                            log.info("[" + info.getName() + "] You can't use that command from the console");
-                        }
-                    }
-                }
-                else if(args[0].equalsIgnoreCase("status"))
+                if(args[0].equalsIgnoreCase("status"))
                 {
                     if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.status"))
                     {
@@ -115,7 +97,7 @@ public class MobArenaGod extends JavaPlugin
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag' or '/mag status'");
                     }
                     else
                     {
@@ -125,20 +107,27 @@ public class MobArenaGod extends JavaPlugin
             }
             else
             {
-                if(sender instanceof Player)
+                if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.toggle"))
                 {
-                    ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
+                    MAGSetter.setGod((Player)sender);
                 }
                 else
                 {
-                    log.info("[" + info.getName() + "] You can't use that command from the console");
+                    if(sender instanceof Player)
+                    {
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
+                    }
+                    else
+                    {
+                        log.info("[" + info.getName() + "] You can't use that command from the console");
+                    }
                 }
             }
         }
         else
         {
             if(sender instanceof Player)
-                ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag toggle' or '/mag status'");
+                ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag' or '/mag status'");
             else
                 log.info("[" + info.getName() + "] You can't use that command from the console");
         }
