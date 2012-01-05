@@ -13,8 +13,25 @@ public class MAGSetter
     public static void setGod(Player player)
     {
         String playerName = player.getName();
+        if(godMode.get(playerName) == null)
+        {
+            godMode.put(playerName, new HashSet<Boolean>());
+        }
         HashSet<Boolean> godSet = godMode.get(playerName);
-        if(godSet.contains(true))
+        
+        if(godSet.isEmpty())
+        {
+            if(!MAGArenaChecker.isPlayerInArena(player))
+            {
+                godSet.add(true);
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode enabled");
+            }
+            else
+            {
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode not allowed in an Arena");
+            }
+        }
+        else if(godSet.contains(true))
         {
             godSet.remove(true);
             godSet.add(false);
