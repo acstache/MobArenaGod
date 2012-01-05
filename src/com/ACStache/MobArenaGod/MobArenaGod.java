@@ -124,13 +124,6 @@ public class MobArenaGod extends JavaPlugin
                 }
             }
         }
-        else
-        {
-            if(sender instanceof Player)
-                ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag' or '/mag status'");
-            else
-                log.info("[" + info.getName() + "] You can't use that command from the console");
-        }
         return true;
     }
 }

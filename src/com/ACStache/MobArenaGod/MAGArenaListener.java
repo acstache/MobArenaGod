@@ -19,6 +19,7 @@ public class MAGArenaListener extends MobArenaListener
         {
             if(MAGSetter.isGod(p))
             {
+                MAGSetter.setGod(p);
                 addGod(arena, p);
             }
         }
@@ -27,13 +28,15 @@ public class MAGArenaListener extends MobArenaListener
     public void onPlayerDeath(Arena arena, Player p)
     {
         //remove a God from the arena on death
-        removeGod(arena, p);
+        if(godMap.get(arena).contains(p))
+            removeGod(arena, p);
     }
     
     public void onPlayerLeave(Arena arena, Player p)
     {
         //remove a God from the arena on leave
-        removeGod(arena, p);
+        if(godMap.get(arena).contains(p))
+            removeGod(arena, p);
     }
     
     private void addGod(Arena arena, Player p)

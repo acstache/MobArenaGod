@@ -44,7 +44,10 @@ public class MAGSetter
     
     public static boolean isGod(Player player)
     {
-        return godMode.get(player.getName()).contains(true);
+        if(godMode.containsKey(player.getName()))
+            return godMode.get(player.getName()).contains(true);
+        else
+            return false;
     }
     
     public static void addGod(Player player)
