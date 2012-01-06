@@ -1,6 +1,6 @@
 name: MobArenaGod
 main: com.ACStache.MobArenaGod.MobArenaGod
-version: 0.3.4
+version: 0.4
 author: ACStache
 description: A simple God Mode plugin that plays nice with Mob Arena
 softdepend: [MobArena]
@@ -10,12 +10,14 @@ commands:
         usage: |
                /mag
                /mag status
-        permission: MobArenaGod.toggle
-        permission: MobArenaGod.status
+               /mag reload
 permissions:
     MobArenaGod.toggle:
         description: allows use of "/mag" command to toggle god mode
         default: op
     MobArenaGod.status:
         description: allows use of "/mag status" command to check current god mode status
+        default: op
+    MobArenaGod.reload:
+        description: allows use of "/mag reload" command to reload the config
         default: op
