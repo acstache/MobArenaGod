@@ -17,11 +17,14 @@ public class MAGPlayerListener extends PlayerListener
     
     public void onPlayerJoin(PlayerJoinEvent event)
     {
-        MAGSetter.addGod(event.getPlayer());
+        Player player = event.getPlayer();
+        MAGSetter.addGod(player);
     }
     
     public void onPlayerQuit(PlayerQuitEvent event)
     {
+        if(MAGConfig.getPersistence()) {return;}
+        
         Player player = event.getPlayer();
         if(MAGSetter.isGod(player))
             MAGSetter.setGod(player);

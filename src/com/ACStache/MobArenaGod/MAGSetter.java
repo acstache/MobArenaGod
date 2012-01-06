@@ -25,6 +25,10 @@ public class MAGSetter
             {
                 godSet.add(true);
                 player.sendMessage(ChatColor.AQUA + "MAG: God mode enabled");
+                if(MAGConfig.getPersistence())
+                {
+                    MAGConfig.addPersGod(player);
+                }
             }
             else
             {
@@ -38,6 +42,10 @@ public class MAGSetter
             if(!MAGArenaChecker.isPlayerInArena(player))
             {
                 player.sendMessage(ChatColor.AQUA + "MAG: God mode disabled");
+                if(MAGConfig.getPersistence())
+                {
+                    MAGConfig.removePersGod(player);
+                }
             }
             else
             {
@@ -51,10 +59,14 @@ public class MAGSetter
             if(!MAGArenaChecker.isPlayerInArena(player))
             {
                 player.sendMessage(ChatColor.AQUA + "MAG: God mode enabled");
+                if(MAGConfig.getPersistence())
+                {
+                    MAGConfig.addPersGod(player);
+                }
             }
             else
             {
-                player.sendMessage(ChatColor.AQUA + "MAG: God mode reinstated, hope you had fun being mortal!");
+                player.sendMessage(ChatColor.AQUA + "MAG: God mode not allowed in an Arena!");
             }
         }
     }
@@ -73,14 +85,23 @@ public class MAGSetter
         if(godMode.get(playerName) == null)
         {
             godMode.put(playerName, new HashSet<Boolean>());
-            if(!godMode.get(playerName).contains(false))
+            
+            if(MAGConfig.getPersistence() && MAGConfig.getPersGod(player))
+            {
+                godMode.get(playerName).add(true);
+            }
+            else
             {
                 godMode.get(playerName).add(false);
             }
         }
-        else
+        else if(godMode.get(playerName).isEmpty())
         {
-            if(!godMode.get(playerName).contains(false))
+            if(MAGConfig.getPersistence() && MAGConfig.getPersGod(player))
+            {
+                godMode.get(playerName).add(true);
+            }
+            else
             {
                 godMode.get(playerName).add(false);
             }
