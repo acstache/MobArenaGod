@@ -9,11 +9,8 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.garbagemule.MobArena.ArenaMaster;
@@ -29,16 +26,12 @@ public class MobArenaGod extends JavaPlugin
     public static ArenaMaster am;
     @SuppressWarnings("unused")
     private MAGArenaListener arenaListener;
-    private final MAGEntityListener entityListener = new MAGEntityListener(this);
-    private final MAGPlayerListener playerListener = new MAGPlayerListener(this);
+    @SuppressWarnings("unused")
+    private MAGListener listener;
     
     public void onEnable()
     {
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvent(Event.Type.FOOD_LEVEL_CHANGE, entityListener, Priority.Highest, this);
-        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Priority.Highest, this);
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
+        listener = new MAGListener(this);
         
         Plugin mobArena = Bukkit.getPluginManager().getPlugin("MobArena");
         if(mobArena != null && mobArena.isEnabled())
