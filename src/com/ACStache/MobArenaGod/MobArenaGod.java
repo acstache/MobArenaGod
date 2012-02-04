@@ -25,8 +25,6 @@ public class MobArenaGod extends JavaPlugin
     public static MobArenaHandler maHandler;
     public static ArenaMaster am;
     @SuppressWarnings("unused")
-    private MAGArenaListener arenaListener;
-    @SuppressWarnings("unused")
     private MAGListener listener;
     
     public void onEnable()
@@ -76,7 +74,6 @@ public class MobArenaGod extends JavaPlugin
         if(maPlugin == null) {return;}
         
         maHandler = new MobArenaHandler();
-        arenaListener = new MAGArenaListener();
         am = ((MobArena)maPlugin).getAM();
     }
     
