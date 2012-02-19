@@ -23,11 +23,6 @@ public class MAGListener implements Listener
 {
     private HashMap<Arena,HashSet<String>> godMap = new HashMap<Arena,HashSet<String>>();
     
-    public MAGListener(MobArenaGod plugin)
-    {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
-    
     /*
      * Entity Listeners
      */

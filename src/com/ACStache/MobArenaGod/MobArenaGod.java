@@ -29,7 +29,7 @@ public class MobArenaGod extends JavaPlugin
     
     public void onEnable()
     {
-        listener = new MAGListener(this);
+        this.getServer().getPluginManager().registerEvents(new MAGListener(), this);
         
         Plugin mobArena = Bukkit.getPluginManager().getPlugin("MobArena");
         if(mobArena != null && mobArena.isEnabled())
@@ -74,7 +74,7 @@ public class MobArenaGod extends JavaPlugin
         if(maPlugin == null) {return;}
         
         maHandler = new MobArenaHandler();
-        am = ((MobArena)maPlugin).getAM();
+        am = ((MobArena)maPlugin).getArenaMaster();
     }
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
