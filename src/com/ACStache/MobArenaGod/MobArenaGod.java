@@ -13,23 +13,21 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.garbagemule.MobArena.ArenaMaster;
+import com.garbagemule.MobArena.framework.ArenaMaster;
 import com.garbagemule.MobArena.MobArena;
-import com.garbagemule.MobArena.MobArenaHandler;
 
 public class MobArenaGod extends JavaPlugin
 {
     private Logger log = Logger.getLogger("Minecraft");
     private PluginDescriptionFile info;
     private static File dir, file;
-    public static MobArenaHandler maHandler;
     public static ArenaMaster am;
     @SuppressWarnings("unused")
     private MAGListener listener;
     
     public void onEnable()
     {
-        this.getServer().getPluginManager().registerEvents(new MAGListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MAGListener(this), this);
         
         Plugin mobArena = Bukkit.getPluginManager().getPlugin("MobArena");
         if(mobArena != null && mobArena.isEnabled())
@@ -73,7 +71,6 @@ public class MobArenaGod extends JavaPlugin
         
         if(maPlugin == null) {return;}
         
-        maHandler = new MobArenaHandler();
         am = ((MobArena)maPlugin).getArenaMaster();
     }
     

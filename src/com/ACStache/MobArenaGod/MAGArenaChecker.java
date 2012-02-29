@@ -11,9 +11,6 @@ public class MAGArenaChecker
      */
     public static boolean isPlayerInArena(Player player)
     {
-        if(MobArenaGod.maHandler != null && MobArenaGod.maHandler.isPlayerInArena(player))
-            return true; //Mob Arena found and player is in an arena
-        else
-            return false;
+        return (MobArenaGod.am.getArenaWithPlayer(player) != null && MobArenaGod.am.getArenaWithPlayer(player).inArena(player));
     }
 }

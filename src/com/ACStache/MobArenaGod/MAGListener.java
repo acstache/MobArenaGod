@@ -3,6 +3,7 @@ package com.ACStache.MobArenaGod;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.garbagemule.MobArena.Arena;
+import com.garbagemule.MobArena.framework.Arena;
 import com.garbagemule.MobArena.events.ArenaPlayerDeathEvent;
 import com.garbagemule.MobArena.events.ArenaPlayerJoinEvent;
 import com.garbagemule.MobArena.events.ArenaPlayerLeaveEvent;
@@ -22,6 +23,12 @@ import com.garbagemule.MobArena.events.ArenaPlayerLeaveEvent;
 public class MAGListener implements Listener
 {
     private HashMap<Arena,HashSet<String>> godMap = new HashMap<Arena,HashSet<String>>();
+    private MobArenaGod plugin;
+    
+    public MAGListener(MobArenaGod plugin)
+    {
+        this.plugin = plugin;
+    }
     
     /*
      * Entity Listeners
@@ -157,9 +164,15 @@ public class MAGListener implements Listener
         }
     }
     
-    private void removeGod(Arena arena, Player p)
+    private void removeGod(final Arena arena, final Player p)
     {
-        godMap.get(arena).remove(p.getName());
-        MAGSetter.setGod(p);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+        {
+            public void run()
+            {
+                godMap.get(arena).remove(p.getName());
+                MAGSetter.setGod(p);
+            }
+        }, 20);
     }
 }

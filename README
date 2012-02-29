@@ -4,3 +4,6 @@ Provide people the permission MobArenaGod.toggle
 Use the command "/mag" to turn god mode on and off
 Provide people the permission MobArenaGod.status
 use the command "/mag status" to check your current god mode status
+
+There is now a config file, to help with persisting God Mode
+This will keep you God Mode enabled across restarts, relogs, and reloads.
