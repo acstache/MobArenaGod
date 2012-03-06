@@ -1,23 +1,23 @@
-name: MobArenaGod
-main: com.ACStache.MobArenaGod.MobArenaGod
-version: 0.4-Beta
+name: ArenaGod+
+main: com.ACStache.ArenaGodPlus.ArenaGodPlus
+version: 0.5-Dev
 author: ACStache
-description: A simple God Mode plugin that plays nice with Mob Arena
-softdepend: [MobArena]
+description: A simple God Mode plugin that plays nice with Mob Arena & PVP Arena
+softdepend: [MobArena, pvparena]
 commands:
-    mag:
+    god:
         description: Turn god mode on or off, or check the status
         usage: |
-               /mag
-               /mag status
-               /mag reload
+               /god
+               /god status
+               /god reload
 permissions:
-    MobArenaGod.toggle:
-        description: allows use of "/mag" command to toggle god mode
+    ArenaGod+.toggle:
+        description: allows use of "/god" command to toggle god mode
         default: op
-    MobArenaGod.status:
-        description: allows use of "/mag status" command to check current god mode status
+    ArenaGod+.status:
+        description: allows use of "/god status" command to check current god mode status
         default: op
-    MobArenaGod.reload:
-        description: allows use of "/mag reload" command to reload the config
+    ArenaGod+.reload:
+        description: allows use of "/god reload" command to reload the config
         default: op

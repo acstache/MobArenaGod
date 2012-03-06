@@ -1,4 +1,4 @@
-package com.ACStache.MobArenaGod;
+package com.ACStache.ArenaGodPlus;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-public class MAGConfig
+public class AGPConfig
 {
     private static YamlConfiguration config = new YamlConfiguration();
     private static File file;

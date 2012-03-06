@@ -1,4 +1,4 @@
-package com.ACStache.MobArenaGod;
+package com.ACStache.ArenaGodPlus;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -9,54 +9,44 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.garbagemule.MobArena.framework.ArenaMaster;
 import com.garbagemule.MobArena.MobArena;
 
-public class MobArenaGod extends JavaPlugin
+import net.slipcor.pvparena.PVPArena;
+
+public class ArenaGodPlus extends JavaPlugin
 {
     private Logger log = Logger.getLogger("Minecraft");
     private PluginDescriptionFile info;
     private static File dir, file;
     public static ArenaMaster am;
-    @SuppressWarnings("unused")
-    private MAGListener listener;
     
     public void onEnable()
     {
-        this.getServer().getPluginManager().registerEvents(new MAGListener(this), this);
-        
-        Plugin mobArena = Bukkit.getPluginManager().getPlugin("MobArena");
-        if(mobArena != null && mobArena.isEnabled())
-            setupMobArena();
-        
-        info = getDescription();
+        this.getServer().getPluginManager().registerEvents(new AGPListener(), this);
+        setupArenaStuff();
         
         dir = getDataFolder();
         file = new File(dir, "config.yml");
         if(!dir.exists())
         {
             dir.mkdir();
-            MAGConfig.loadConfig(file);
+            AGPConfig.loadConfig(file);
         }
         else
         {
-            MAGConfig.loadConfig(file);
-        }
-        for(World w : Bukkit.getWorlds())
-        {
-            for(Player p : w.getPlayers())
-            {
-                if(MAGConfig.getPersGod(p))
-                {
-                    MAGSetter.addGod(p);
-                }
-            }
+            AGPConfig.loadConfig(file);
         }
         
+        for(World w : Bukkit.getWorlds())
+            for(Player p : w.getPlayers())
+                if(AGPConfig.getPersGod(p))
+                    AGPSetter.addGod(p);
+
+        info = getDescription();
         log.info("[" + info.getName() + "] v" + info.getVersion() + " Successfully Enabled! By: " + info.getAuthors());
     }
     
@@ -65,42 +55,46 @@ public class MobArenaGod extends JavaPlugin
         log.info("[" + info.getName() + "] Sucessfully Disabled");
     }
     
-    private void setupMobArena()
+    private void setupArenaStuff()
     {
-        Plugin maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
-        
-        if(maPlugin == null) {return;}
-        
-        am = ((MobArena)maPlugin).getArenaMaster();
+        MobArena maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
+        PVPArena pvpPlugin = (PVPArena)Bukkit.getServer().getPluginManager().getPlugin("pvparena");
+        if(maPlugin != null && maPlugin.isEnabled()) {
+            am = maPlugin.getArenaMaster();
+            this.getServer().getPluginManager().registerEvents(new AGPMAListener(this), this);
+            log.info("[" + info.getName() + "] Found MobArena!");
+        }
+        if(pvpPlugin != null && pvpPlugin.isEnabled()) {
+            this.getServer().getPluginManager().registerEvents(new AGPPVPListener(this), this);
+            log.info("[" + info.getName() + "] Found PVPArena!");
+        }
     }
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        if(command.getName().equalsIgnoreCase("mag"))
+        if(command.getName().equalsIgnoreCase("god"))
         {
             if(args.length >= 1)
             {
                 if(args[0].equalsIgnoreCase("status"))
                 {
-                    if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.status"))
+                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.status"))
                     {
                         Player player = (Player)sender;
-                        if(MAGSetter.isGod(player))
+                        if(AGPSetter.isGod(player))
                         {
-                            player.sendMessage(ChatColor.AQUA + "MAG: You are a God");
-                            MAGConfig.addPersGod(player);
+                            player.sendMessage(ChatColor.AQUA + "AGP: You are a God");
                         }
                         else
                         {
-                            player.sendMessage(ChatColor.AQUA + "MAG: You are not a God");
-                            MAGConfig.removePersGod(player);
+                            player.sendMessage(ChatColor.AQUA + "AGP: You are not a God");
                         }
                     }
                     else
                     {
                         if(sender instanceof Player)
                         {
-                            ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
+                            ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: You don't have permission to do that.");
                         }
                         else
                         {
@@ -110,12 +104,12 @@ public class MobArenaGod extends JavaPlugin
                 }
                 else if(args[0].equalsIgnoreCase("reload"))
                 {
-                    if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.reload") || !(sender instanceof Player))
+                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.reload") || !(sender instanceof Player))
                     {
-                        MAGConfig.loadConfig(file);
+                        AGPConfig.loadConfig(file);
                         if(sender instanceof Player)
                         {
-                            ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Config reloaded");
+                            ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: Config reloaded");
                         }
                         else
                         {
@@ -124,14 +118,14 @@ public class MobArenaGod extends JavaPlugin
                     }
                     else
                     {
-                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: You don't have permission to do that.");
                     }
                 }
                 else
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: Please type in '/mag', '/mag status', or '/mag reload'");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: Please type in '/mag', '/mag status', or '/mag reload'");
                     }
                     else
                     {
@@ -141,15 +135,15 @@ public class MobArenaGod extends JavaPlugin
             }
             else
             {
-                if(sender instanceof Player && ((Player)sender).hasPermission("MobArenaGod.toggle"))
+                if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.toggle"))
                 {
-                    MAGSetter.setGod((Player)sender);
+                    AGPSetter.setGod((Player)sender);
                 }
                 else
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage(ChatColor.AQUA + "MAG: You don't have permission to do that.");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: You don't have permission to do that.");
                     }
                     else
                     {
