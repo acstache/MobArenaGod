@@ -23,6 +23,8 @@ public class ArenaGodPlus extends JavaPlugin
     private PluginDescriptionFile info;
     private static File dir, file;
     public static ArenaMaster am;
+    private static boolean foundMA;
+    private static boolean foundPVP;
     
     public void onEnable()
     {
@@ -59,15 +61,28 @@ public class ArenaGodPlus extends JavaPlugin
     {
         MobArena maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
         PVPArena pvpPlugin = (PVPArena)Bukkit.getServer().getPluginManager().getPlugin("pvparena");
+        foundMA = false;
+        foundPVP = false;
         if(maPlugin != null && maPlugin.isEnabled()) {
             am = maPlugin.getArenaMaster();
             this.getServer().getPluginManager().registerEvents(new AGPMAListener(this), this);
+            foundMA = true;
             log.info("[" + info.getName() + "] Found MobArena!");
         }
         if(pvpPlugin != null && pvpPlugin.isEnabled()) {
             this.getServer().getPluginManager().registerEvents(new AGPPVPListener(this), this);
+            foundPVP = true;
             log.info("[" + info.getName() + "] Found PVPArena!");
         }
+    }
+    
+    public static boolean getMA()
+    {
+        return foundMA;
+    }
+    public static boolean getPVP()
+    {
+        return foundPVP;
     }
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)

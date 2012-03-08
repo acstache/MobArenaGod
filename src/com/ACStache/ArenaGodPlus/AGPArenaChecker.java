@@ -13,11 +13,17 @@ public class AGPArenaChecker
      */
     public static boolean isPlayerInMAArena(Player player)
     {
-        return (ArenaGodPlus.am.getArenaWithPlayer(player) != null && ArenaGodPlus.am.getArenaWithPlayer(player).inArena(player));
+        if(ArenaGodPlus.getMA())
+            return (ArenaGodPlus.am.getArenaWithPlayer(player) != null && ArenaGodPlus.am.getArenaWithPlayer(player).inArena(player));
+        else
+            return false;
     }
     
     public static boolean isPlayerInPVPArena(Player player)
     {
-        return !PVPArenaAPI.getArenaName(player).equals("");
+        if(ArenaGodPlus.getPVP())
+            return !PVPArenaAPI.getArenaName(player).equals("");
+        else
+            return false;
     }
 }
