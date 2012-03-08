@@ -27,6 +27,7 @@ public class ArenaGodPlus extends JavaPlugin
     public void onEnable()
     {
         this.getServer().getPluginManager().registerEvents(new AGPListener(), this);
+        info = getDescription();
         setupArenaStuff();
         
         dir = getDataFolder();
@@ -46,7 +47,6 @@ public class ArenaGodPlus extends JavaPlugin
                 if(AGPConfig.getPersGod(p))
                     AGPSetter.addGod(p);
 
-        info = getDescription();
         log.info("[" + info.getName() + "] v" + info.getVersion() + " Successfully Enabled! By: " + info.getAuthors());
     }
     
