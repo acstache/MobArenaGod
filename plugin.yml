@@ -12,12 +12,12 @@ commands:
                /god status
                /god reload
 permissions:
-    ArenaGod+.toggle:
+    ArenaGodPlus.toggle:
         description: allows use of "/god" command to toggle god mode
         default: op
-    ArenaGod+.status:
+    ArenaGodPlus.status:
         description: allows use of "/god status" command to check current god mode status
         default: op
-    ArenaGod+.reload:
+    ArenaGodPlus.reload:
         description: allows use of "/god reload" command to reload the config
         default: op
