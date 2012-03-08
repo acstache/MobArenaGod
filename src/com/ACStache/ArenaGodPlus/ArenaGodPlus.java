@@ -78,7 +78,7 @@ public class ArenaGodPlus extends JavaPlugin
             {
                 if(args[0].equalsIgnoreCase("status"))
                 {
-                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.status"))
+                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGodPlus.status"))
                     {
                         Player player = (Player)sender;
                         if(AGPSetter.isGod(player))
@@ -104,7 +104,7 @@ public class ArenaGodPlus extends JavaPlugin
                 }
                 else if(args[0].equalsIgnoreCase("reload"))
                 {
-                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.reload") || !(sender instanceof Player))
+                    if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGodPlus.reload") || !(sender instanceof Player))
                     {
                         AGPConfig.loadConfig(file);
                         if(sender instanceof Player)
@@ -135,7 +135,7 @@ public class ArenaGodPlus extends JavaPlugin
             }
             else
             {
-                if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGod+.toggle"))
+                if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGodPlus.toggle"))
                 {
                     AGPSetter.setGod((Player)sender);
                 }

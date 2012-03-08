@@ -41,7 +41,7 @@ public class AGPListener implements Listener
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event)
     {
         Player p = event.getPlayer();
-        if(AGPSetter.isGod(p) && !p.hasPermission("MobArenaGod.toggle"))
+        if(AGPSetter.isGod(p) && !p.hasPermission("ArenaGodPlus.toggle"))
             AGPSetter.setGod(p);
     }
     
