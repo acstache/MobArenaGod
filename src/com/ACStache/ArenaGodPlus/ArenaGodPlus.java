@@ -23,8 +23,7 @@ public class ArenaGodPlus extends JavaPlugin
     private PluginDescriptionFile info;
     private static File dir, file;
     public static ArenaMaster am;
-    private static boolean foundMA;
-    private static boolean foundPVP;
+    private static boolean foundMA = false, foundPVP = false;
     
     public void onEnable()
     {
@@ -61,8 +60,6 @@ public class ArenaGodPlus extends JavaPlugin
     {
         MobArena maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
         PVPArena pvpPlugin = (PVPArena)Bukkit.getServer().getPluginManager().getPlugin("pvparena");
-        foundMA = false;
-        foundPVP = false;
         if(maPlugin != null && maPlugin.isEnabled()) {
             am = maPlugin.getArenaMaster();
             this.getServer().getPluginManager().registerEvents(new AGPMAListener(this), this);
@@ -76,11 +73,11 @@ public class ArenaGodPlus extends JavaPlugin
         }
     }
     
-    public static boolean getMA()
+    public static boolean foundMA()
     {
         return foundMA;
     }
-    public static boolean getPVP()
+    public static boolean foundPVP()
     {
         return foundPVP;
     }
@@ -113,7 +110,7 @@ public class ArenaGodPlus extends JavaPlugin
                         }
                         else
                         {
-                            log.info("[" + info.getName() + "] You can't use that command from the console");
+                            log.warning("[" + info.getName() + "] You can't use that command from the console");
                         }
                     }
                 }
@@ -144,7 +141,7 @@ public class ArenaGodPlus extends JavaPlugin
                     }
                     else
                     {
-                        log.info("[" + info.getName() + "] You can't use that command from the console");
+                        log.warning("[" + info.getName() + "] You can't use that command from the console");
                     }
                 }
             }
@@ -162,7 +159,7 @@ public class ArenaGodPlus extends JavaPlugin
                     }
                     else
                     {
-                        log.info("[" + info.getName() + "] You can't use that command from the console");
+                        log.warning("[" + info.getName() + "] You can't use that command from the console");
                     }
                 }
             }

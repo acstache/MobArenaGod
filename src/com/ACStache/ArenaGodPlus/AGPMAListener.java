@@ -27,11 +27,9 @@ public class AGPMAListener implements Listener
     public void onMAPlayerJoin(ArenaPlayerJoinEvent event)
     {
         Player p = event.getPlayer();
-        if(AGPSetter.isGod(p))
-        {
-            AGPSetter.setGod(p);
-            addMAGod(event.getArena(), p);
-        }
+        if(!AGPSetter.isGod(p)) {return;}
+        AGPSetter.setGod(p);
+        addMAGod(event.getArena(), p);
     }
     
     @EventHandler
@@ -40,7 +38,6 @@ public class AGPMAListener implements Listener
         Arena arena = event.getArena();
         Player p = event.getPlayer();
         if(godMAMap.get(arena) == null) {return;}
-        
         if(godMAMap.get(arena).contains(p.getName()))
             removeMAGod(arena, p);
     }
@@ -51,7 +48,6 @@ public class AGPMAListener implements Listener
         Arena arena = event.getArena();
         Player p = event.getPlayer();
         if(godMAMap.get(arena) == null) {return;}
-        
         if(godMAMap.get(arena).contains(p.getName()))
             removeMAGod(arena, p);
     }
@@ -63,21 +59,16 @@ public class AGPMAListener implements Listener
     private void addMAGod(Arena arena, Player p)
     {
         String pName = p.getName(); 
-        
         if(godMAMap.get(arena) == null)
         {
             godMAMap.put(arena, new HashSet<String>());
             if(!godMAMap.get(arena).contains(pName))
-            {
                 godMAMap.get(arena).add(pName);
-            }
         }
         else
         {
             if(!godMAMap.get(arena).contains(pName))
-            {
                 godMAMap.get(arena).add(pName);
-            }
         }
     }
     

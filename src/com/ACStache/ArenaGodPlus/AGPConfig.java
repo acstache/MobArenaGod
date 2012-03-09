@@ -52,11 +52,10 @@ public class AGPConfig
                     }
                     else
                     {
-                        if(persistGods.get(s).contains(true)) {return;}
+                        if(persistGods.get(s).contains(true))
+                            continue;
                         else
-                        {
                             persistGods.get(s).add(true);
-                        }
                     }
                 }
             }

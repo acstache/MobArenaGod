@@ -19,12 +19,10 @@ public class AGPListener implements Listener
         if(!(event.getEntity() instanceof Player)) {return;}
         Player player = (Player)event.getEntity();
         if(!AGPSetter.isGod(player)) {return;}
-        
+        event.setCancelled(true);
         DamageCause cause = event.getCause();
         if(cause == DamageCause.FIRE || cause == DamageCause.LAVA || cause == DamageCause.FIRE_TICK)
             player.setFireTicks(0);
-        
-        event.setCancelled(true);
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
@@ -56,7 +54,6 @@ public class AGPListener implements Listener
     public void onPlayerQuit(PlayerQuitEvent event)
     {
         if(AGPConfig.getPersistence()) {return;}
-        
         Player player = event.getPlayer();
         if(AGPSetter.isGod(player))
             AGPSetter.setGod(player);

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import net.slipcor.pvparena.definitions.Arena;
@@ -22,30 +23,31 @@ public class AGPPVPListener implements Listener
         this.plugin = plugin;
     }
     
+    @EventHandler
     public void onPvpPlayerJoin(PAJoinEvent event)
     {
         Player p = event.getPlayer();
-        if(AGPSetter.isGod(p))
-        {
-            AGPSetter.setGod(p);
-            addPVPGod(event.getArena(), p);
-        }
+        if(!AGPSetter.isGod(p)) {return;}
+        AGPSetter.setGod(p);
+        addPVPGod(event.getArena(), p);
     }
+    
+    @EventHandler
     public void onPvpPlayerDeath(PADeathEvent event)
     {
         Arena arena = event.getArena();
         Player p = event.getPlayer();
         if(godPVPMap.get(arena) == null) {return;}
-        
         if(godPVPMap.get(arena).contains(p.getName()))
             removePVPGod(arena, p);
     }
+    
+    @EventHandler
     public void onPvpPlayerLeave(PALeaveEvent event)
     {
         Arena arena = event.getArena();
         Player p = event.getPlayer();
         if(godPVPMap.get(arena) == null) {return;}
-        
         if(godPVPMap.get(arena).contains(p.getName()))
             removePVPGod(arena, p);
     }
@@ -57,21 +59,16 @@ public class AGPPVPListener implements Listener
     private void addPVPGod(Arena arena, Player p)
     {
         String pName = p.getName(); 
-        
         if(godPVPMap.get(arena) == null)
         {
             godPVPMap.put(arena, new HashSet<String>());
             if(!godPVPMap.get(arena).contains(pName))
-            {
                 godPVPMap.get(arena).add(pName);
-            }
         }
         else
         {
             if(!godPVPMap.get(arena).contains(pName))
-            {
                 godPVPMap.get(arena).add(pName);
-            }
         }
     }
     

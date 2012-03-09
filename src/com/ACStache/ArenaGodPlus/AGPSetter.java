@@ -14,9 +14,8 @@ public class AGPSetter
     {
         String playerName = player.getName();
         if(godMode.get(playerName) == null)
-        {
             godMode.put(playerName, new HashSet<Boolean>());
-        }
+        
         HashSet<Boolean> godSet = godMode.get(playerName);
         
         if(godSet.isEmpty())
@@ -26,13 +25,11 @@ public class AGPSetter
                 godSet.add(true);
                 player.sendMessage(ChatColor.AQUA + "AGP: God mode enabled");
                 if(AGPConfig.getPersistence())
-                {
                     AGPConfig.addPersGod(player);
-                }
             }
             else
             {
-                player.sendMessage(ChatColor.AQUA + "AGP: God mode not allowed in an Arena");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena");
             }
         }
         else if(godSet.contains(true))
@@ -40,14 +37,12 @@ public class AGPSetter
             godSet.remove(true);
             godSet.add(false);
             if(AGPConfig.getPersistence())
-            {
                 AGPConfig.removePersGod(player);
-            }
             
             if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player))
                 player.sendMessage(ChatColor.AQUA + "AGP: God mode disabled");
             else
-                player.sendMessage(ChatColor.AQUA + "AGP: God mode not allowed in an Arena");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena");
         }
         else
         {
@@ -57,13 +52,11 @@ public class AGPSetter
                 godSet.add(true);
                 player.sendMessage(ChatColor.AQUA + "AGP: God mode enabled");
                 if(AGPConfig.getPersistence())
-                {
                     AGPConfig.addPersGod(player);
-                }
             }
             else
             {
-                player.sendMessage(ChatColor.AQUA + "AGP: God mode not allowed in an Arena!");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena!");
             }
         }
     }
@@ -82,26 +75,17 @@ public class AGPSetter
         if(godMode.get(playerName) == null)
         {
             godMode.put(playerName, new HashSet<Boolean>());
-            
             if(AGPConfig.getPersistence() && AGPConfig.getPersGod(player))
-            {
                 godMode.get(playerName).add(true);
-            }
             else
-            {
                 godMode.get(playerName).add(false);
-            }
         }
         else if(godMode.get(playerName).isEmpty())
         {
             if(AGPConfig.getPersistence() && AGPConfig.getPersGod(player))
-            {
                 godMode.get(playerName).add(true);
-            }
             else
-            {
                 godMode.get(playerName).add(false);
-            }
         }
     }
 }
