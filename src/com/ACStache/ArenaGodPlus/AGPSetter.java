@@ -20,7 +20,7 @@ public class AGPSetter
         
         if(godSet.isEmpty())
         {
-            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player))
+            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player) && !AGPConfig.getExcludedWorlds().contains(player.getWorld()))
             {
                 godSet.add(true);
                 player.sendMessage(ChatColor.AQUA + "AGP: God mode enabled");
@@ -29,7 +29,7 @@ public class AGPSetter
             }
             else
             {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas or excluded Worlds");
             }
         }
         else if(godSet.contains(true))
@@ -39,14 +39,14 @@ public class AGPSetter
             if(AGPConfig.getPersistence())
                 AGPConfig.removePersGod(player);
             
-            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player))
+            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player) && !AGPConfig.getExcludedWorlds().contains(player.getWorld()))
                 player.sendMessage(ChatColor.AQUA + "AGP: God mode disabled");
             else
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas or excluded Worlds");
         }
         else
         {
-            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player))
+            if(!AGPArenaChecker.isPlayerInMAArena(player) && !AGPArenaChecker.isPlayerInPVPArena(player) && !AGPConfig.getExcludedWorlds().contains(player.getWorld()))
             {
                 godSet.remove(false);
                 godSet.add(true);
@@ -56,7 +56,7 @@ public class AGPSetter
             }
             else
             {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in an Arena!");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas or excluded Worlds");
             }
         }
     }

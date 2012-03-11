@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -15,6 +17,7 @@ public class AGPConfig
     private static File file;
     private static Boolean persist;
     private static HashMap<String,HashSet<Boolean>> persistGods = new HashMap<String,HashSet<Boolean>>();
+    private static HashSet<World> excludedWorlds = new HashSet<World>();
     
     public static void loadConfig(File f)
     {
@@ -29,12 +32,13 @@ public class AGPConfig
         }
         catch(FileNotFoundException e)
         {
-            System.out.println("[MobArenaGod] No config found, creating one for you");
+            System.out.println("[ArenaGodPlus] No config found, creating one for you");
             config.set("persistence", false);
+            config.set("excluded-worlds", Arrays.asList("someWorld", "someWorld_nether", "someWorld_the_end"));
         }
         catch(Exception e)
         {
-            System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
         }
         finally
         {
@@ -59,6 +63,16 @@ public class AGPConfig
                     }
                 }
             }
+            if(config.contains("excluded-worlds"))
+            {
+                for(String s : config.getStringList("excluded-worlds"))
+                {
+                    if(Bukkit.getServer().getWorld(s) != null)
+                        excludedWorlds.add(Bukkit.getServer().getWorld(s));
+                    else
+                        System.out.println("[ArenaGodPlus] The world " + s + " is not found for AGP Exclusion");
+                }
+            }
         }
         
         try
@@ -67,7 +81,7 @@ public class AGPConfig
         }
         catch (Exception e)
         {
-            System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
         }
     }
     
@@ -79,7 +93,7 @@ public class AGPConfig
         }
         catch(Exception e)
         {
-            System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
         }
         finally
         {
@@ -91,7 +105,7 @@ public class AGPConfig
             }
             catch (Exception e)
             {
-                System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+                System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
             }
         }
     }
@@ -119,7 +133,7 @@ public class AGPConfig
         }
         catch(Exception e)
         {
-            System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
         }
         finally
         {
@@ -130,9 +144,14 @@ public class AGPConfig
             }
             catch (Exception e)
             {
-                System.out.println("[MobArenaGod] An Error has occured. Try deleting your config and reloading MobArenaGod");
+                System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
             }
         }
+    }
+    
+    public static HashSet<World> getExcludedWorlds()
+    {
+        return excludedWorlds;
     }
     
     public static Boolean getPersistence()

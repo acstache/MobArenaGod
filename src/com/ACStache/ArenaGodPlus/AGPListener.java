@@ -1,5 +1,8 @@
 package com.ACStache.ArenaGodPlus;
 
+import java.util.HashSet;
+
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,6 +16,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AGPListener implements Listener
 {
+    private HashSet<String> lostGods = new HashSet<String>();
+    
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent event)
     {
@@ -39,8 +44,22 @@ public class AGPListener implements Listener
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event)
     {
         Player p = event.getPlayer();
-        if(AGPSetter.isGod(p) && !p.hasPermission("ArenaGodPlus.toggle"))
+        if(AGPSetter.isGod(p) && AGPConfig.getExcludedWorlds().contains(p.getWorld()))
+        {
+            p.sendMessage(ChatColor.AQUA + "AGP: This world is not allowed to have Gods");
             AGPSetter.setGod(p);
+            lostGods.add(p.getName());
+        }
+        else if(lostGods.contains(p.getName()) && !AGPConfig.getExcludedWorlds().contains(p.getWorld()))
+        {
+            p.sendMessage(ChatColor.AQUA + "AGP: This world allows Gods! Welcome back to Immortality");
+            AGPSetter.setGod(p);
+            lostGods.remove(p.getName());
+        }
+        else if(lostGods.contains(p.getName()) && AGPConfig.getExcludedWorlds().contains(p.getWorld()))
+        {
+            p.sendMessage(ChatColor.AQUA + "AGP: This world is not allowed to have Gods either" );
+        }
     }
     
     @EventHandler
