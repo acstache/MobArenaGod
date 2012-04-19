@@ -1,4 +1,4 @@
-package com.ACStache.ArenaGodPlus;
+package com.ACStache.ArenaGodPlus.PluginListeners;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,17 +8,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import net.slipcor.pvparena.definitions.Arena;
+import com.ACStache.ArenaGodPlus.AGPSetter;
+import com.ACStache.ArenaGodPlus.ArenaGodPlus;
 import net.slipcor.pvparena.events.PADeathEvent;
 import net.slipcor.pvparena.events.PAJoinEvent;
 import net.slipcor.pvparena.events.PALeaveEvent;
+import net.slipcor.pvparena.arena.Arena;
 
-public class AGPPVPListener implements Listener
+public class PvPArenaListener implements Listener
 {
     private HashMap<Arena,HashSet<String>> godPVPMap = new HashMap<Arena,HashSet<String>>();
     private ArenaGodPlus plugin;
     
-    public AGPPVPListener(ArenaGodPlus plugin)
+    public PvPArenaListener(ArenaGodPlus plugin)
     {
         this.plugin = plugin;
     }

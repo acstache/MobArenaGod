@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -28,6 +29,15 @@ public class AGPListener implements Listener
         DamageCause cause = event.getCause();
         if(cause == DamageCause.FIRE || cause == DamageCause.LAVA || cause == DamageCause.FIRE_TICK)
             player.setFireTicks(0);
+    }
+    
+    @EventHandler (priority = EventPriority.HIGHEST)
+    public void onEntityCombust(EntityCombustEvent event)
+    {
+        if(!(event.getEntity() instanceof Player)) {return;}
+        Player player = (Player)event.getEntity();
+        if(!AGPSetter.isGod(player)) {return;}
+        event.setCancelled(true);
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)

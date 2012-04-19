@@ -43,7 +43,7 @@ public class AGPConfig
         finally
         {
             persist = config.getBoolean("persistence");
-            if(persist)
+            if(config.contains("persistence") && config.getBoolean("persistence"))
             {
                 if(config.getStringList("gods") == null) {return;}
                     
@@ -63,6 +63,11 @@ public class AGPConfig
                     }
                 }
             }
+            else
+            {
+                config.set("persistence", false);
+            }
+            
             if(config.contains("excluded-worlds"))
             {
                 for(String s : config.getStringList("excluded-worlds"))
@@ -72,6 +77,10 @@ public class AGPConfig
                     else
                         System.out.println("[ArenaGodPlus] The world " + s + " is not found for AGP Exclusion");
                 }
+            }
+            else
+            {
+                config.set("excluded-worlds", Arrays.asList("someWorld", "someWorld_nether", "someWorld_the_end"));
             }
         }
         

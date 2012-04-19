@@ -1,4 +1,4 @@
-package com.ACStache.ArenaGodPlus;
+package com.ACStache.ArenaGodPlus.PluginListeners;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,17 +8,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import com.ACStache.ArenaGodPlus.AGPSetter;
+import com.ACStache.ArenaGodPlus.ArenaGodPlus;
 import com.garbagemule.MobArena.events.ArenaPlayerDeathEvent;
 import com.garbagemule.MobArena.events.ArenaPlayerJoinEvent;
 import com.garbagemule.MobArena.events.ArenaPlayerLeaveEvent;
 import com.garbagemule.MobArena.framework.Arena;
 
-public class AGPMAListener implements Listener
+public class MobArenaListener implements Listener
 {
     private HashMap<Arena,HashSet<String>> godMAMap = new HashMap<Arena,HashSet<String>>();
     private ArenaGodPlus plugin;
     
-    public AGPMAListener(ArenaGodPlus plugin)
+    public MobArenaListener(ArenaGodPlus plugin)
     {
         this.plugin = plugin;
     }

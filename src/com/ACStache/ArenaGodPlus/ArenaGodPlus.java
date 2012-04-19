@@ -10,12 +10,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.ACStache.ArenaGodPlus.PluginListeners.MobArenaListener;
+import com.ACStache.ArenaGodPlus.PluginListeners.MobDungeonListener;
+import com.ACStache.ArenaGodPlus.PluginListeners.PvPArenaListener;
+import com.ACStache.ArenaGodPlus.PluginListeners.WarListener;
 import com.garbagemule.MobArena.framework.ArenaMaster;
 import com.garbagemule.MobArena.MobArena;
-
 import net.slipcor.pvparena.PVPArena;
+import com.tommytony.war.War;
+
+import de.kumpelblase2.mobdungeon.MobDungeonMain;
 
 public class ArenaGodPlus extends JavaPlugin
 {
@@ -23,13 +30,12 @@ public class ArenaGodPlus extends JavaPlugin
     private PluginDescriptionFile info;
     private static File dir, file;
     public static ArenaMaster am;
-    private static boolean foundMA = false, foundPVP = false;
+    private static boolean foundMA = false, foundPVP = false, foundWar = false, foundMD = false;
     
     public void onEnable()
     {
         this.getServer().getPluginManager().registerEvents(new AGPListener(), this);
         info = getDescription();
-        setupArenaStuff();
         
         dir = getDataFolder();
         file = new File(dir, "config.yml");
@@ -48,6 +54,7 @@ public class ArenaGodPlus extends JavaPlugin
                 if(AGPConfig.getPersGod(p))
                     AGPSetter.addGod(p);
 
+        setupArenaStuff();
         log.info("[" + info.getName() + "] v" + info.getVersion() + " Successfully Enabled! By: " + info.getAuthors());
     }
     
@@ -58,18 +65,31 @@ public class ArenaGodPlus extends JavaPlugin
     
     private void setupArenaStuff()
     {
-        MobArena maPlugin = (MobArena)Bukkit.getServer().getPluginManager().getPlugin("MobArena");
-        PVPArena pvpPlugin = (PVPArena)Bukkit.getServer().getPluginManager().getPlugin("pvparena");
+        PluginManager pm = this.getServer().getPluginManager();
+        MobArena maPlugin = (MobArena)pm.getPlugin("MobArena");
+        PVPArena pvpPlugin = (PVPArena)pm.getPlugin("pvparena");
+        MobDungeonMain mdPlugin = (MobDungeonMain)pm.getPlugin("MobDungeon");
+        War warPlugin = (War)pm.getPlugin("War");
         if(maPlugin != null && maPlugin.isEnabled()) {
             am = maPlugin.getArenaMaster();
-            this.getServer().getPluginManager().registerEvents(new AGPMAListener(this), this);
+            pm.registerEvents(new MobArenaListener(this), this);
             foundMA = true;
             log.info("[" + info.getName() + "] Found MobArena!");
         }
         if(pvpPlugin != null && pvpPlugin.isEnabled()) {
-            this.getServer().getPluginManager().registerEvents(new AGPPVPListener(this), this);
+            pm.registerEvents(new PvPArenaListener(this), this);
             foundPVP = true;
             log.info("[" + info.getName() + "] Found PVPArena!");
+        }
+        if(warPlugin != null && warPlugin.isEnabled()) {
+            pm.registerEvents(new WarListener(), this);
+            foundWar = true;
+            log.info("[" + info.getName() + "] Found War!");
+        }
+        if(mdPlugin != null && mdPlugin.isEnabled()) {
+            pm.registerEvents(new MobDungeonListener(this), this);
+            foundMD = true;
+            log.info("[" + info.getName() + "] Found MobDungeon!");
         }
     }
     
@@ -81,10 +101,19 @@ public class ArenaGodPlus extends JavaPlugin
     {
         return foundPVP;
     }
+    public static boolean foundWar()
+    {
+        return foundWar;
+    }
+    public static boolean foundMD()
+    {
+        return foundMD;
+    }
     
+    //TODO command executor this bad boy
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        if(command.getName().equalsIgnoreCase("god"))
+        if(command.getName().equalsIgnoreCase("god") || command.getName().equalsIgnoreCase("agp"))
         {
             if(args.length >= 1)
             {
@@ -137,7 +166,7 @@ public class ArenaGodPlus extends JavaPlugin
                 {
                     if(sender instanceof Player)
                     {
-                        ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: Please type in '/mag', '/mag status', or '/mag reload'");
+                        ((Player)sender).sendMessage(ChatColor.AQUA + "AGP: Please type in '/" + command.getName()+ "', '/" + command.getName()+ " status', or '/" + command.getName()+ " reload'");
                     }
                     else
                     {
@@ -149,6 +178,7 @@ public class ArenaGodPlus extends JavaPlugin
             {
                 if(sender instanceof Player && ((Player)sender).hasPermission("ArenaGodPlus.toggle"))
                 {
+                    //TODO allow for setting God Mode on others, require another permission (would be in above section)
                     AGPSetter.setGod((Player)sender);
                 }
                 else
@@ -159,6 +189,7 @@ public class ArenaGodPlus extends JavaPlugin
                     }
                     else
                     {
+                        //TODO make usable from console IF an online player is found (would be in above section)
                         log.warning("[" + info.getName() + "] You can't use that command from the console");
                     }
                 }

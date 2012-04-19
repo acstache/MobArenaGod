@@ -1,6 +1,6 @@
 name: ArenaGodPlus
 main: com.ACStache.ArenaGodPlus.ArenaGodPlus
-version: 0.5
+version: 0.6-Dev
 author: ACStache
 description: A simple God Mode plugin that plays nice with Mob Arena & PVP Arena
 softdepend: [MobArena, pvparena]
@@ -11,6 +11,12 @@ commands:
                /god
                /god status
                /god reload
+    agp:
+        description: Alias of /god
+        usage: |
+               /agp
+               /agp status
+               /agp reload
 permissions:
     ArenaGodPlus.toggle:
         description: allows use of "/god" command to toggle god mode
