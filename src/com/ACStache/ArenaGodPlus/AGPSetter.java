@@ -91,12 +91,13 @@ public class AGPSetter
     
     private static boolean inRestrictedRegion(Player player)
     {
-        //TODO add MobDungeon check
         if(AGPArenaChecker.isPlayerInMAArena(player))
             return true;
         if(AGPArenaChecker.isPlayerInPVPArena(player))
             return true;
         if(AGPArenaChecker.isPlayerInWarRegion(player))
+            return true;
+        if(AGPArenaChecker.isPlayerInMobDungeon(player))
             return true;
         if(AGPConfig.getExcludedWorlds().contains(player.getWorld()))
             return true;
