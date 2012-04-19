@@ -12,7 +12,7 @@ import com.ACStache.ArenaGodPlus.AGPSetter;
 
 public class WarListener implements Listener
 {
-    private HashSet<String> warPlayers;
+    private HashSet<String> warPlayers = new HashSet<String>();
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event)

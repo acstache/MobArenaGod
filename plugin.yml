@@ -1,6 +1,6 @@
 name: ArenaGodPlus
 main: com.ACStache.ArenaGodPlus.ArenaGodPlus
-version: 0.6
+version: 0.6.1
 author: ACStache
 description: A simple God Mode plugin that plays nice with Mob Arena & PVP Arena
 softdepend: [MobArena, pvparena]

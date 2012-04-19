@@ -29,7 +29,7 @@ public class AGPSetter
             }
             else
             {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas, War regions, or excluded Worlds");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
             }
         }
         else if(godSet.contains(true))
@@ -42,7 +42,7 @@ public class AGPSetter
             if(!inRestrictedRegion(player))
                     player.sendMessage(ChatColor.AQUA + "AGP: God mode disabled");
             else
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas, War regions, or excluded Worlds");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
         }
         else
         {
@@ -56,7 +56,7 @@ public class AGPSetter
             }
             else
             {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Arenas, War regions, or excluded Worlds");
+                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
             }
         }
     }
