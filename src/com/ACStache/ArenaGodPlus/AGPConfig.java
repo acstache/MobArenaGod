@@ -26,36 +26,28 @@ public class AGPConfig
     }
     public static void loadConfig()
     {
-        try
-        {
+        try {
             config.load(file);
         }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("[ArenaGodPlus] No config found, creating one for you");
+        catch(FileNotFoundException e) {
+            ArenaGodPlus.printToConsole("No config found, creating one for you", true);
             config.set("persistence", false);
             config.set("excluded-worlds", Arrays.asList("someWorld", "someWorld_nether", "someWorld_the_end"));
         }
-        catch(Exception e)
-        {
-            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+        catch(Exception e) {
+            ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
         }
-        finally
-        {
+        finally {
             persist = config.getBoolean("persistence");
-            if(config.contains("persistence") && config.getBoolean("persistence"))
-            {
+            if(config.contains("persistence") && config.getBoolean("persistence")) {
                 if(config.getStringList("gods") == null) {return;}
                     
-                for(String s : config.getStringList("gods"))
-                {
-                    if(persistGods.get(s) == null)
-                    {
+                for(String s : config.getStringList("gods")) {
+                    if(persistGods.get(s) == null) {
                         persistGods.put(s, new HashSet<Boolean>());
                         persistGods.get(s).add(true);
                     }
-                    else
-                    {
+                    else {
                         if(persistGods.get(s).contains(true))
                             continue;
                         else
@@ -63,58 +55,47 @@ public class AGPConfig
                     }
                 }
             }
-            else
-            {
+            else {
                 config.set("persistence", false);
             }
             
-            if(config.contains("excluded-worlds"))
-            {
-                for(String s : config.getStringList("excluded-worlds"))
-                {
+            if(config.contains("excluded-worlds")) {
+                for(String s : config.getStringList("excluded-worlds")) {
                     if(Bukkit.getServer().getWorld(s) != null)
                         excludedWorlds.add(Bukkit.getServer().getWorld(s));
                     else
-                        System.out.println("[ArenaGodPlus] The world " + s + " is not found for AGP Exclusion");
+                        ArenaGodPlus.printToConsole("The world " + s + " is not found for AGP Exclusion", true);
                 }
             }
-            else
-            {
+            else {
                 config.set("excluded-worlds", Arrays.asList("someWorld", "someWorld_nether", "someWorld_the_end"));
             }
         }
         
-        try
-        {
+        try {
             config.save(file);
         }
-        catch (Exception e)
-        {
-            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+        catch (Exception e) {
+            ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
         }
     }
     
     public static void addPersGod(Player p)
     {
-        try
-        {
+        try {
             config.load(file);
         }
-        catch(Exception e)
-        {
-            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+        catch(Exception e) {
+            ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
         }
-        finally
-        {
+        finally {
             String[] playerName = {p.getName()};
             config.set("gods", Arrays.asList(playerName));
-            try
-            {
+            try {
                 config.save(file);
             }
-            catch (Exception e)
-            {
-                System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+            catch (Exception e) {
+                ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
             }
         }
     }
@@ -123,37 +104,28 @@ public class AGPConfig
     {
         boolean b = false;
         if(!getPersistence() || config.getStringList("gods") == null)
-        {
             return b;
-        }
         for(String s : config.getStringList("gods"))
-        {
             if(s.equals(p.getName()))
                 b = true;
-        }
         return b;
     }
     
     public static void removePersGod(Player p)
     {
-        try
-        {
+        try {
             config.load(file);
         }
-        catch(Exception e)
-        {
-            System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+        catch(Exception e) {
+            ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
         }
-        finally
-        {
+        finally {
             config.set("gods." + p.getName(), null);
-            try
-            {
+            try {
                 config.save(file);
             }
-            catch (Exception e)
-            {
-                System.out.println("[ArenaGodPlus] An Error has occured. Try deleting your config and reloading ArenaGodPlus");
+            catch (Exception e) {
+                ArenaGodPlus.printToConsole("An Error has occured. Try deleting your config and reloading ArenaGodPlus", true);
             }
         }
     }

@@ -61,14 +61,12 @@ public class MobArenaListener implements Listener
     private void addMAGod(Arena arena, Player p)
     {
         String pName = p.getName(); 
-        if(godMAMap.get(arena) == null)
-        {
+        if(godMAMap.get(arena) == null) {
             godMAMap.put(arena, new HashSet<String>());
             if(!godMAMap.get(arena).contains(pName))
                 godMAMap.get(arena).add(pName);
         }
-        else
-        {
+        else {
             if(!godMAMap.get(arena).contains(pName))
                 godMAMap.get(arena).add(pName);
         }
@@ -76,10 +74,8 @@ public class MobArenaListener implements Listener
     
     private void removeMAGod(final Arena arena, final Player p)
     {
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-        {
-            public void run()
-            {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
                 godMAMap.get(arena).remove(p.getName());
                 AGPSetter.setGod(p);
             }

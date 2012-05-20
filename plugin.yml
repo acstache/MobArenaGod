@@ -1,9 +1,9 @@
 name: ArenaGodPlus
 main: com.ACStache.ArenaGodPlus.ArenaGodPlus
-version: 0.6.1
+version: 0.7
 author: ACStache
 description: A simple God Mode plugin that plays nice with Mob Arena & PVP Arena
-softdepend: [MobArena, pvparena]
+softdepend: [Heroes, MobArena, MobDungeon, pvparena, War]
 commands:
     god:
         description: Turn god mode on or off, or check the status
@@ -11,19 +11,24 @@ commands:
                /god
                /god status
                /god reload
+               /god give playername
     agp:
         description: Alias of /god
         usage: |
                /agp
                /agp status
                /agp reload
+               /agp give playername
 permissions:
     ArenaGodPlus.toggle:
-        description: allows use of "/god" command to toggle god mode
+        description: Ability to toggle personal God Mode
+        default: op
+    ArenaGodPlus.give:
+        description: Ability to toggle other player's God Mode
         default: op
     ArenaGodPlus.status:
-        description: allows use of "/god status" command to check current god mode status
+        description: Ability to check current God Mode state
         default: op
     ArenaGodPlus.reload:
-        description: allows use of "/god reload" command to reload the config
+        description: Ability to reload the config file
         default: op

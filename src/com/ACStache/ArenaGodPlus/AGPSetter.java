@@ -2,8 +2,6 @@ package com.ACStache.ArenaGodPlus;
 
 import java.util.HashMap;
 import java.util.HashSet;
-
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class AGPSetter
@@ -18,45 +16,38 @@ public class AGPSetter
         
         HashSet<Boolean> godSet = godMode.get(playerName);
         
-        if(godSet.isEmpty())
-        {
-            if(!inRestrictedRegion(player))
-            {
+        if(godSet.isEmpty()) {
+            if(!inRestrictedRegion(player)) {
                 godSet.add(true);
-                player.sendMessage(ChatColor.AQUA + "AGP: God mode enabled");
+                ArenaGodPlus.printToPlayer(player, "God mode enabled", false);
                 if(AGPConfig.getPersistence())
                     AGPConfig.addPersGod(player);
             }
-            else
-            {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
+            else {
+                ArenaGodPlus.printToPlayer(player, "God mode not allowed in Restricted Zones or excluded Worlds", true);
             }
         }
-        else if(godSet.contains(true))
-        {
+        else if(godSet.contains(true)) {
             godSet.remove(true);
             godSet.add(false);
             if(AGPConfig.getPersistence())
                 AGPConfig.removePersGod(player);
             
             if(!inRestrictedRegion(player))
-                    player.sendMessage(ChatColor.AQUA + "AGP: God mode disabled");
+                ArenaGodPlus.printToPlayer(player, "God mode disabled", false);
             else
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
+                ArenaGodPlus.printToPlayer(player, "God mode not allowed in Restricted Zones or excluded Worlds", true);
         }
-        else
-        {
-            if(!inRestrictedRegion(player))
-            {
+        else {
+            if(!inRestrictedRegion(player)) {
                 godSet.remove(false);
                 godSet.add(true);
-                player.sendMessage(ChatColor.AQUA + "AGP: God mode enabled");
+                ArenaGodPlus.printToPlayer(player, "God mode enabled", false);
                 if(AGPConfig.getPersistence())
                     AGPConfig.addPersGod(player);
             }
-            else
-            {
-                player.sendMessage(ChatColor.RED + "AGP: God mode not allowed in Restricted Zones or excluded Worlds");
+            else {
+                ArenaGodPlus.printToPlayer(player, "God mode not allowed in Restricted Zones or excluded Worlds", true);
             }
         }
     }
@@ -72,16 +63,14 @@ public class AGPSetter
     public static void addGod(Player player)
     {
         String playerName = player.getName();
-        if(godMode.get(playerName) == null)
-        {
+        if(godMode.get(playerName) == null) {
             godMode.put(playerName, new HashSet<Boolean>());
             if(AGPConfig.getPersistence() && AGPConfig.getPersGod(player))
                 godMode.get(playerName).add(true);
             else
                 godMode.get(playerName).add(false);
         }
-        else if(godMode.get(playerName).isEmpty())
-        {
+        else if(godMode.get(playerName).isEmpty()) {
             if(AGPConfig.getPersistence() && AGPConfig.getPersGod(player))
                 godMode.get(playerName).add(true);
             else
@@ -91,13 +80,13 @@ public class AGPSetter
     
     private static boolean inRestrictedRegion(Player player)
     {
-        if(AGPArenaChecker.isPlayerInMAArena(player))
+        if(AGPRegionChecker.isPlayerInMAArena(player))
             return true;
-        if(AGPArenaChecker.isPlayerInPVPArena(player))
+        if(AGPRegionChecker.isPlayerInPVPArena(player))
             return true;
-        if(AGPArenaChecker.isPlayerInWarRegion(player))
+        if(AGPRegionChecker.isPlayerInWarRegion(player))
             return true;
-        if(AGPArenaChecker.isPlayerInMobDungeon(player))
+        if(AGPRegionChecker.isPlayerInMobDungeon(player))
             return true;
         if(AGPConfig.getExcludedWorlds().contains(player.getWorld()))
             return true;

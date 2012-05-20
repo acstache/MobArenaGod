@@ -61,14 +61,12 @@ public class PvPArenaListener implements Listener
     private void addPVPGod(Arena arena, Player p)
     {
         String pName = p.getName(); 
-        if(godPVPMap.get(arena) == null)
-        {
+        if(godPVPMap.get(arena) == null) {
             godPVPMap.put(arena, new HashSet<String>());
             if(!godPVPMap.get(arena).contains(pName))
                 godPVPMap.get(arena).add(pName);
         }
-        else
-        {
+        else {
             if(!godPVPMap.get(arena).contains(pName))
                 godPVPMap.get(arena).add(pName);
         }
@@ -76,10 +74,8 @@ public class PvPArenaListener implements Listener
     
     private void removePVPGod(final Arena arena, final Player p)
     {
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-        {
-            public void run()
-            {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
                 godPVPMap.get(arena).remove(p.getName());
                 AGPSetter.setGod(p);
             }

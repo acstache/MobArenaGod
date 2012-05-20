@@ -50,14 +50,12 @@ public class MobDungeonListener implements Listener
     private void addMDGod(Dungeon dungeon, Player p)
     {
         String pName = p.getName(); 
-        if(godMDMap.get(dungeon) == null)
-        {
+        if(godMDMap.get(dungeon) == null) {
             godMDMap.put(dungeon, new HashSet<String>());
             if(!godMDMap.get(dungeon).contains(pName))
                 godMDMap.get(dungeon).add(pName);
         }
-        else
-        {
+        else {
             if(!godMDMap.get(dungeon).contains(pName))
                 godMDMap.get(dungeon).add(pName);
         }
@@ -65,10 +63,8 @@ public class MobDungeonListener implements Listener
     
     private void removeMDGod(final Dungeon dungeon, final Player p)
     {
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-        {
-            public void run()
-            {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
                 godMDMap.get(dungeon).remove(p.getName());
                 AGPSetter.setGod(p);
             }

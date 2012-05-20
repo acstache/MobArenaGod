@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.ACStache.ArenaGodPlus.AGPArenaChecker;
+import com.ACStache.ArenaGodPlus.AGPRegionChecker;
 import com.ACStache.ArenaGodPlus.AGPSetter;
 
 public class WarListener implements Listener
@@ -18,31 +18,24 @@ public class WarListener implements Listener
     public void onPlayerMove(PlayerMoveEvent event)
     {
         Player player = event.getPlayer();
-        if(!AGPArenaChecker.isPlayerInWarRegion(player) && !warPlayers.contains(player.getName()))
-        {
+        if(!AGPRegionChecker.isPlayerInWarRegion(player) && !warPlayers.contains(player.getName())) {
             return;
         }
-        else if(!AGPArenaChecker.isPlayerInWarRegion(player) && warPlayers.contains(player.getName()))
-        {
-            if(AGPSetter.isGod(player))
-            {
+        else if(!AGPRegionChecker.isPlayerInWarRegion(player) && warPlayers.contains(player.getName())) {
+            if(AGPSetter.isGod(player)) {
                 warPlayers.remove(player.getName());
             }
-            else
-            {
+            else {
                 AGPSetter.setGod(player);
                 warPlayers.remove(player.getName());
             }
         }
-        else
-        {
-            if(AGPSetter.isGod(player))
-            {
+        else {
+            if(AGPSetter.isGod(player)) {
                 AGPSetter.setGod(player);
                 warPlayers.add(player.getName());
             }
-            else
-            {
+            else {
                 return;
             }
         }
